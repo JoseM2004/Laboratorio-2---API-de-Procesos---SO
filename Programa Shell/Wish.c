@@ -124,7 +124,7 @@ int preProcesar(char *buffer) {
         }
         if (contadorPiezas == 1) { // solo comando, sin archivo destino
             write(STDERR_FILENO, MENSAJE_ERROR, strlen(MENSAJE_ERROR));
-            exit(0);
+            return 0;
         }
 
         // Separar buffer en: parteComando > archivoSalida
@@ -137,7 +137,7 @@ int preProcesar(char *buffer) {
         }
         if (i > 2) { // más de un archivo destino → error
             write(STDERR_FILENO, MENSAJE_ERROR, strlen(MENSAJE_ERROR));
-            exit(0);
+            return 0;
         }
 
         // Extraer el nombre del archivo destino (partes[1]) 
@@ -169,7 +169,9 @@ int preProcesar(char *buffer) {
         // Verificar que la apertura del archivo fue exitosa
         if (fdSalida == -1 || fdError == -1 || x > 1 || i > 2) {
             write(STDERR_FILENO, MENSAJE_ERROR, strlen(MENSAJE_ERROR));
-            exit(0);
+            dup2(copiaStdout, 1); // restaurar stdout antes de salir 
+            close(copiaStdout);
+            return 0;
         }
 
         // Dejar en buffer SOLO la parte del comando
@@ -332,8 +334,6 @@ int main(int argc, char *argv[]) {
             }
 
             // FASE 2: Esperar a que TODOS los hijos terminen con waitpid().
-            // CORRECCIÓN: el original tenía i++ en lugar de x++,
-            // causando un loop infinito.
             for (int x = 0; x < j; x++) {
                 int estadoRetorno = 0;
                 waitpid(pids[x], &estadoRetorno, 0);
