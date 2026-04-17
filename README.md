@@ -134,7 +134,7 @@ Si `REDIRIGIDO == 1`, restaura el descriptor original de `stdout` usando `dup2(c
 ### Compilación
 
 ```bash
-gcc -Wall -Wextra -o wish Wish.c
+gcc Wish.c -o wish
 ```
 
 ---
@@ -145,6 +145,9 @@ gcc -Wall -Wextra -o wish Wish.c
 ./wish
 ```
  Aparece el prompt `wish> `. El shell queda esperando comandos. Salir con `exit`.
+ 
+ <img width="689" height="73" alt="image" src="https://github.com/user-attachments/assets/2872adfa-1372-4700-888b-05826cd58276" />
+
 
 ---
 
@@ -157,6 +160,8 @@ ls
 ```
  El shell lista el contenido del directorio actual, igual que ejecutar `ls` directamente.
 
+ <img width="717" height="118" alt="image" src="https://github.com/user-attachments/assets/c38fe7bc-c43d-4c52-b526-0c7c4007f32e" />
+
 ---
 
 ### Prueba 3 — Comando externo con argumentos
@@ -167,6 +172,8 @@ ls
 ls -la /tmp
 ```
  Lista detallada del directorio `/tmp` con permisos, tamaños y fechas.
+
+ <img width="1464" height="525" alt="image" src="https://github.com/user-attachments/assets/84b5ac13-db95-4879-8174-69836bdac9a3" />
 
 ---
 
@@ -180,6 +187,8 @@ ls
 ```
  El directorio de trabajo cambia a `/tmp` y `ls` muestra su contenido.
 
+ <img width="991" height="312" alt="image" src="https://github.com/user-attachments/assets/1379c30a-9f42-4235-bd4d-906af58cf2e3" />
+
 ---
 
 ### Prueba 5 — Built-in `chd` con error (directorio inexistente)
@@ -190,6 +199,8 @@ ls
 chd /directorio_que_no_existe
 ```
  Se imprime `An error has occurred` en stderr. El shell continúa.
+
+ <img width="699" height="127" alt="image" src="https://github.com/user-attachments/assets/c6313146-a770-4b52-93ae-e13670cae08b" />
 
 ---
 
@@ -202,6 +213,8 @@ route /usr/bin
 ls
 ```
  El comando `ls` sigue funcionando porque se buscó en `/usr/bin/ls`.
+
+ <img width="686" height="132" alt="image" src="https://github.com/user-attachments/assets/c9014048-011e-47a8-9b17-fe8bdfc07a5a" />
 
 ---
 
@@ -216,6 +229,8 @@ echo hola
 ```
  Ambos comandos funcionan correctamente usando las rutas especificadas.
 
+ <img width="691" height="261" alt="image" src="https://github.com/user-attachments/assets/fbb4dd4f-3e94-472a-99c4-2d1c0008ccaf" />
+
 ---
 
 ### Prueba 8 — Built-in `route` vacío (path vacío)
@@ -228,6 +243,8 @@ ls
 ```
  El shell imprime `An error has occurred` porque no hay ningún directorio de búsqueda. Los built-ins (`exit`, `chd`, `route`) siguen funcionando.
 
+ <img width="693" height="146" alt="image" src="https://github.com/user-attachments/assets/0b7b144d-ba90-4475-9e79-f5cae65ceeea" />
+
 ---
 
 ### Prueba 9 — Built-in `exit` sin argumentos
@@ -239,6 +256,8 @@ exit
 ```
  El shell termina limpiamente y regresa al prompt del sistema operativo.
 
+ <img width="694" height="90" alt="image" src="https://github.com/user-attachments/assets/665c7e32-e084-44a1-90ff-a775a8089c99" />
+
 ---
 
 ### Prueba 10 — Built-in `exit` con argumentos (error)
@@ -249,6 +268,8 @@ exit
 exit argumento_de_mas
 ```
  Se imprime `An error has occurred`. El shell **no** termina y sigue esperando comandos.
+
+ <img width="686" height="126" alt="image" src="https://github.com/user-attachments/assets/56b8f8bb-33ab-46cb-ad4b-c4b865f3f91f" />
 
 ---
 
@@ -262,6 +283,8 @@ ls -la /tmp > salida.txt
 cat salida.txt
 ```
  El archivo `salida.txt` contiene el listado de `/tmp`. No aparece nada en pantalla durante la ejecución del comando.
+
+ <img width="1462" height="504" alt="image" src="https://github.com/user-attachments/assets/aabd9621-232b-431c-a377-7639d4930383" />
 
 ---
 
@@ -277,6 +300,8 @@ cat archivo.txt
 ```
  `archivo.txt` contiene únicamente la salida de `ls`, no la palabra "hola". El archivo fue truncado.
 
+ <img width="699" height="244" alt="image" src="https://github.com/user-attachments/assets/42a27bd4-6de1-43d4-a48b-b07a60f44c98" />
+
 ---
 
 ### Prueba 13 — Redirección con error (sin archivo destino)
@@ -288,6 +313,8 @@ ls >
 ```
  Se imprime `An error has occurred`. El shell continúa.
 
+ <img width="695" height="108" alt="image" src="https://github.com/user-attachments/assets/5d5af4cb-c84f-40ed-a84a-3e1ffce8fd99" />
+
 ---
 
 ### Prueba 14 — Comandos paralelos con `&`
@@ -298,6 +325,8 @@ ls >
 ls /tmp & ls /var & ls /etc
 ```
  Los tres listados aparecen (posiblemente intercalados) y el shell devuelve el control solo cuando los tres terminan. El orden de salida puede variar entre ejecuciones.
+
+ <img width="1391" height="919" alt="image" src="https://github.com/user-attachments/assets/5c64624b-ae57-4213-9abe-fe702aab8e63" />
 
 ---
 
@@ -312,6 +341,8 @@ echo -e "ls /tmp\nls /var\nexit" > batch.txt
 ```
  El shell ejecuta `ls /tmp` y `ls /var` sin mostrar prompt, luego termina. No se imprime `wish>` en ningún momento.
 
+ <img width="1142" height="280" alt="image" src="https://github.com/user-attachments/assets/2ba51ab7-7eee-4650-a3ed-25e247229789" />
+
 ---
 
 ### Prueba 16 — Modo batch con archivo inexistente
@@ -321,6 +352,8 @@ echo -e "ls /tmp\nls /var\nexit" > batch.txt
 ```
  Se imprime `An error has occurred` y el proceso termina con código de salida `1`.
 
+ <img width="1002" height="127" alt="image" src="https://github.com/user-attachments/assets/3bd0db12-0507-48db-aa57-e045713234f0" />
+
 ---
 
 ### Prueba 17 — Más de un argumento al invocar el shell (error)
@@ -329,6 +362,8 @@ echo -e "ls /tmp\nls /var\nexit" > batch.txt
 ./wish archivo1.txt archivo2.txt
 ```
  Se imprime `An error has occurred` y el proceso termina inmediatamente.
+
+ <img width="1000" height="84" alt="image" src="https://github.com/user-attachments/assets/73108671-a8f0-4149-8c14-4748fb6708f7" />
 
 ---
 
@@ -343,6 +378,8 @@ cat salida1.txt
 cat salida2.txt
 ```
  Cada archivo contiene la salida del comando correspondiente. Ambas redirecciones funcionaron en paralelo.
+ 
+ <img width="992" height="598" alt="image" src="https://github.com/user-attachments/assets/75c8c3dc-5d50-42e4-9af7-069ba9f948b7" />
 
 ---
 
@@ -357,6 +394,8 @@ ls
 ```
  El shell ignora las líneas en blanco o con solo espacios/tabs, y ejecuta `ls` normalmente.
 
+ <img width="908" height="174" alt="image" src="https://github.com/user-attachments/assets/688795cc-d155-4a03-9342-f7e682f042c2" />
+
 ---
 
 ### Prueba 20 — Comando inexistente
@@ -367,6 +406,8 @@ ls
 comandoquenoexiste
 ```
  Se imprime `An error has occurred`. El shell **no** termina y sigue en ejecución.
+
+ <img width="691" height="105" alt="image" src="https://github.com/user-attachments/assets/bf1ee6a9-d337-4635-9b4a-4cbebb06fb0b" />
 
 ---
 
@@ -407,7 +448,7 @@ Es importante resaltar que, aunque se contó con el apoyo de estas herramientas,
 
 ```bash
 # Compilar
-gcc -Wall -Wextra -o wish Wish.c
+gcc Wish.c -o wish Wish.c
 
 # Modo interactivo
 ./wish
