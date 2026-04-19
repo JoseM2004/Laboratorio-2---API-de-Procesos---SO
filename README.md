@@ -126,7 +126,9 @@ Si `REDIRIGIDO == 1`, restaura el descriptor original de `stdout` usando `dup2(c
 
 ## c) Problemas presentados y soluciones
 
+El principal desafío durante el desarrollo fue la complejidad inherente del programa combinada con la poca experiencia previa en C. Conceptos como el manejo de descriptores de archivo con `dup()` y `dup2()`, la creación de procesos con `fork()` y `execv()`, y el parseo manual de cadenas con `strtok()` resultaron difíciles de comprender e implementar correctamente desde el inicio. Adicionalmente, se presentaron bugs sutiles como el uso de `exit()` dentro del proceso padre (que terminaba el shell completo en lugar de solo rechazar el comando) y un error de incremento de variable en el loop de comandos paralelos (`i++` en lugar de `x++`) que causaba un ciclo infinito. Como solución, nos apoyamos en la IA generativa como herramienta de aprendizaje continuo: no para obtener respuestas directas, sino para entender el *por qué* detrás de cada concepto, depurar errores con explicaciones detalladas y validar que la implementación cumplía con cada requisito del enunciado. Esto nos permitió avanzar de forma progresiva, consolidando el entendimiento de la API de procesos de POSIX a lo largo del desarrollo.
 
+--- 
 
 ## d) Pruebas de funcionalidad
 
@@ -413,8 +415,8 @@ comandoquenoexiste
 
 ## e) Video de sustentación
 
-> 🎥 [Enlace al video de 10 minutos — YouTube / Drive]  
-> *(Añadir el enlace al video donde se sustenta el desarrollo de la práctica)*
+> 🎥 [Enlace al video de 10 minutos — YouTube]  
+> https://www.youtube.com/watch?v=YvFSSg-l2u8
 
 ---
 
